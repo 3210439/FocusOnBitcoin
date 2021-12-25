@@ -2,10 +2,15 @@ package org.nell_nell.springboot.web;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.nell_nell.springboot.config.auth.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -13,15 +18,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(controllers = HelloController.class)
+@WebMvcTest(controllers = HelloController.class,
+        excludeFilters = {
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
+        }
+)
 public class HelloControllerTest {
 
-    // MockMvc 클래스 덕분에 GET, POST 등의 요청에대한 API 테스트를 할 수 있다.
     @Autowired
     private MockMvc mvc;
 
+    @WithMockUser(roles="USER")
     @Test
-    public void hello가_리턴된다() throws Exception{
+    public void hello가_리턴된다() throws Exception {
         String hello = "hello";
 
         mvc.perform(get("/hello"))
@@ -29,6 +38,7 @@ public class HelloControllerTest {
                 .andExpect(content().string(hello));
     }
 
+    @WithMockUser(roles="USER")
     @Test
     public void helloDto가_리턴된다() throws Exception {
         String name = "hello";
