@@ -22,7 +22,7 @@ before_deploy:
 deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY # Travis repo setting에 설정된 값
-    secret_access_key: $AWS_SECRET_KEY
+    secret_access_key: $AWS_SECRET
     bucket: focusonbit-springboot-build
     region: ap-northeast-2
     skip_cleanup: true
