@@ -34,7 +34,7 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
     secret_access_key: $AWS_SECRET # Travis repo settings에 설정된 값
     bucket: focusonbit-springboot-build
-    key: focusOnBitcoin.zip # 빌드 파일을 압축해서 전달
+    key: FocusOnBitcoin.zip # 빌드 파일을 압축해서 전달
     bundle_type: zip # 압축 확장자
     application: FocusOnBitcoin # 웹 콘솔에서 등록한 CodeDeploy 애플리케이션
     deployment_group: FocusOnBitcoin-group # 웹 콘솔에서 등록한 CodeDeploy 배포 그룹
