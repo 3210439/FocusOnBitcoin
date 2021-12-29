@@ -40,6 +40,7 @@ deploy:
     deployment_group: FocusOnBitcoin-group # 웹 콘솔에서 등록한 CodeDeploy 배포 그룹
     region: ap-northeast-2
     wait-until-deployed: true
+    # 태그오류 테스트
 
 before_install:
   - chmod +x gradlew
