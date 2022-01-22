@@ -43,6 +43,16 @@ public class IndexController {
         return "homeLogin";
     }
 
+    @GetMapping("/humorBoard")
+    public String humorBoard(Model model, @LoginUser SessionUser user)
+    {
+        if (user != null)
+        {
+            model.addAttribute("userName", user.getName());
+        }
+        return "humorBoard";
+    }
+
     @GetMapping("/posts/save")
     public String postsSave() {
         return "posts-save";
