@@ -1,9 +1,11 @@
 package org.nell_nell.springboot.web.dto.article_dto;
 
+import lombok.Getter;
 import org.nell_nell.springboot.domain.article.Article;
 
 import java.time.LocalDateTime;
 
+@Getter
 public class ArticleListResponseDto {
     private Long id;
     private String title;
