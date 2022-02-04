@@ -11,13 +11,13 @@ public class ArticleListResponseDto {
     private String title;
     private String user_id;
     private Long view_count;
-    private LocalDateTime modifiedDate;
+    private LocalDateTime modified_date;
 
     public ArticleListResponseDto(Article entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.user_id = entity.getUser_id();
         this.view_count = entity.getView_count();
-        this.modifiedDate = entity.getModifiedDate();
+        this.modified_date = entity.getModified_date();
     }
 }

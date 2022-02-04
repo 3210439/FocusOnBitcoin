@@ -1,5 +1,6 @@
 package org.nell_nell.springboot.service.article;
 
+import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
 import org.nell_nell.springboot.domain.article.Article;
 import org.nell_nell.springboot.domain.article.ArticleRepository;
@@ -8,6 +9,7 @@ import org.nell_nell.springboot.web.dto.article_dto.ArticleListResponseDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleResponseDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleSaveRequestDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleUpdateRequestDto;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
