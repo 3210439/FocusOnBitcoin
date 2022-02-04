@@ -9,4 +9,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     @Query("SELECT a FROM Article a WHERE a.category = 'humor' ORDER BY a.id DESC")
     List<Article> findHumorBoard();
+
+    //@Query("SELECT a FROM Article a")
+    //List<Article> findHumorBoard();
 }
