@@ -6,6 +6,7 @@ import org.nell_nell.springboot.config.auth.dto.SessionUser;
 import org.nell_nell.springboot.service.article.ArticleService;
 import org.nell_nell.springboot.service.posts.PostsService;
 import org.nell_nell.springboot.web.dto.PostsResponseDto;
+import org.nell_nell.springboot.web.dto.article_dto.ArticleResponseDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -81,4 +82,13 @@ public class IndexController {
 
         return "posts-update";
     }
+
+    @GetMapping("/article/update/{id}")
+    public String articleUpdate(@PathVariable Long id, Model model) {
+        ArticleResponseDto dto = articleService.findById(id);
+        model.addAttribute("article", dto);
+
+        return "shown-part";
+    }
+
 }

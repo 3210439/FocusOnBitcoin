@@ -7,24 +7,23 @@
         <form>
             <div class="form-group">
                 <label for="title">글 번호</label>
-                <input type="text" class="form-control" id="id" value="{{post.id}}" readonly>
+                <p class="fs-6" id="id">{{article.id}}</p>
             </div>
             <div class="form-group">
                 <label for="title">제목</label>
-                <input type="text" class="form-control" id="title" value="{{post.title}}">
+                <p class="fs-1" id="title">{{article.title}}</p>
             </div>
             <div class="form-group">
                 <label for="author"> 작성자 </label>
-                <input type="text" class="form-control" id="author" value="{{post.author}}" readonly>`
+                <p class="fs-4" id="author">{{article.user_id}}</p>
             </div>
             <div class="form-group">
                 <label for="content"> 내용 </label>
-                <textarea class="form-control" id="content">{{post.content}}</textarea>
+                <p class="fs-6" id="content">{{article.content}}</p>
             </div>
         </form>
-        <a href="/" role="button" class="btn btn-secondary">취소</a>
-        <button type="button" class="btn btn-primary" id="btn-update">수정 완료</button>
-        <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
+        <button type="button" class="btn btn-primary" id="btn-update">수정하기</button>
+        <button type="button" class="btn btn-danger" id="btn-delete">삭제하기</button>
     </div>
 </div>
 
