@@ -30,102 +30,131 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 const url = "https://communityoneapi.herokuapp.com/projects";
 
 window.onload=function(){
+  let price;
+  let binance_price = new Array();
+  let kimchi_price = new Array();
+  let month;
   fetch("https://crix-api-cdn.upbit.com/v1/crix/candles/months?code=CRIX.UPBIT.USDT-BTC&count=12&ciqrandom=1644651039982%EF%BB%BF")
       .then((response) => response.json())
       .then(function(data){
-        let price = data.map((item) => item.tradePrice);
-        let month = data.map((item) => item.firstDayOfPeriod);
-        // Area Chart Example
-        var ctx = document.getElementById("myAreaChart");
-        var myLineChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: month.reverse(),
-            datasets: [{
-              label: "Earnings",
-              lineTension: 0.3,
-              backgroundColor: "rgba(78, 115, 223, 0.05)",
-              borderColor: "rgba(78, 115, 223, 1)",
-              pointRadius: 3,
-              pointBackgroundColor: "rgba(78, 115, 223, 1)",
-              pointBorderColor: "rgba(78, 115, 223, 1)",
-              pointHoverRadius: 3,
-              pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-              pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-              pointHitRadius: 10,
-              pointBorderWidth: 2,
-              //data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
-              data: price.reverse(),
-            }],
-          },
-          options: {
-            maintainAspectRatio: false,
-            layout: {
-              padding: {
-                left: 10,
-                right: 25,
-                top: 25,
-                bottom: 0
+        price = data.map((item) => item.tradePrice);
+        month = data.map((item) => item.firstDayOfPeriod);})
+      .then(function(){
+        fetch('https://www.binance.com/api/v3/klines?endTime=1644730313000&limit=1000&symbol=BTCUSDT&interval=1M')
+            .then((response) => response.json())
+            .then(function(data){
+              closePrice = data.filter((item,index) => {
+                if(data.length-index <= 12) {
+                  binance_price.push(parseInt(item[4]))
+                  return parseInt(item[4])
+                }
+              });
+            })
+            .then(function (){
+              for(let i= 0; i<price.length; i++)
+              {
+                console.log('price: '+ price[price.length - i- 1])
+                console.log('binance: '+ binance_price[i])
+                kimchi_price.push((price[price.length - i- 1] - binance_price[i])/binance_price[i]*100)
               }
-            },
-            scales: {
-              xAxes: [{
-                time: {
-                  unit: 'date'
-                },
-                gridLines: {
-                  display: false,
-                  drawBorder: false
-                },
-                ticks: {
-                  maxTicksLimit: 7
-                }
+              console.log('kimchi'+kimchi_price)
+            });
+      })
+      .then(
+        function (){
+          // Area Chart Example
+          var ctx = document.getElementById("myAreaChart");
+          var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: month.reverse(),
+              datasets: [{
+                label: "Earnings",
+                lineTension: 0.3,
+                backgroundColor: "rgba(78, 115, 223, 0.05)",
+                borderColor: "rgba(78, 115, 223, 1)",
+                pointRadius: 3,
+                pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointBorderColor: "rgba(78, 115, 223, 1)",
+                pointHoverRadius: 3,
+                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                pointHitRadius: 10,
+                pointBorderWidth: 2,
+                //data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
+                data: price.reverse(),
               }],
-              yAxes: [{
-                ticks: {
-                  maxTicksLimit: 5,
-                  padding: 10,
-                  // Include a dollar sign in the ticks
-                  callback: function(value, index, values) {
-                    return '$' + number_format(value);
+            },
+            options: {
+              maintainAspectRatio: false,
+              layout: {
+                padding: {
+                  left: 10,
+                  right: 25,
+                  top: 25,
+                  bottom: 0
+                }
+              },
+              scales: {
+                xAxes: [{
+                  time: {
+                    unit: 'date'
+                  },
+                  gridLines: {
+                    display: false,
+                    drawBorder: false
+                  },
+                  ticks: {
+                    maxTicksLimit: 7
                   }
-                },
-                gridLines: {
-                  color: "rgb(234, 236, 244)",
-                  zeroLineColor: "rgb(234, 236, 244)",
-                  drawBorder: false,
-                  borderDash: [2],
-                  zeroLineBorderDash: [2]
-                }
-              }],
-            },
-            legend: {
-              display: false
-            },
-            tooltips: {
-              backgroundColor: "rgb(255,255,255)",
-              bodyFontColor: "#858796",
-              titleMarginBottom: 10,
-              titleFontColor: '#6e707e',
-              titleFontSize: 14,
-              borderColor: '#dddfeb',
-              borderWidth: 1,
-              xPadding: 15,
-              yPadding: 15,
-              displayColors: false,
-              intersect: false,
-              mode: 'index',
-              caretPadding: 10,
-              callbacks: {
-                label: function(tooltipItem, chart) {
-                  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                  return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                }],
+                yAxes: [{
+                  ticks: {
+                    maxTicksLimit: 5,
+                    padding: 10,
+                    // Include a dollar sign in the ticks
+                    callback: function(value, index, values) {
+                      return '$' + number_format(value);
+                    }
+                  },
+                  gridLines: {
+                    color: "rgb(234, 236, 244)",
+                    zeroLineColor: "rgb(234, 236, 244)",
+                    drawBorder: false,
+                    borderDash: [2],
+                    zeroLineBorderDash: [2]
+                  }
+                }],
+              },
+              legend: {
+                display: false
+              },
+              tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                titleMarginBottom: 10,
+                titleFontColor: '#6e707e',
+                titleFontSize: 14,
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                intersect: false,
+                mode: 'index',
+                caretPadding: 10,
+                callbacks: {
+                  label: function(tooltipItem, chart) {
+                    var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                    return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                  }
                 }
               }
             }
-          }
-        });
-      });
+          });
+        }
+      );
+
 
 }
 
