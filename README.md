@@ -13,7 +13,7 @@
 사용된 기술 스택: 
 
 기본
-java 11, gradle 4.10.2
+java 8, gradle 4.10.2
 백엔드
    - Spring-Boot(2.1.9), Maria-DB, JUNIT4, JPA
 
