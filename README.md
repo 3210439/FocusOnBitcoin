@@ -14,6 +14,7 @@
 
 기본
 java 8, gradle 4.10.2
+
 백엔드
    - Spring-Boot(2.1.9), Maria-DB, JUNIT4, JPA
 
