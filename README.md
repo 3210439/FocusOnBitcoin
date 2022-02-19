@@ -12,8 +12,11 @@
 
 사용된 기술 스택: 
 
+기본
+java 8, gradle 4.10.2
+
 백엔드
-   - Spring-Boot, Maria-DB, JUNIT, JPA
+   - Spring-Boot(2.1.9), Maria-DB, JUNIT4, JPA
 
 프론트엔드
    - Bootstrap, jquery, mustache, html, css, javascript
