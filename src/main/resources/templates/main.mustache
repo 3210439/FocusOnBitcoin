@@ -30,12 +30,12 @@
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
-                    {{#userName}}
+                    {{#nickname}}
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{userName}}</span>
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{nickname}}</span>
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -59,11 +59,11 @@
                             </a>
                         </div>
                     </li>
-                    {{/userName}}
+                    {{/nickname}}
                 </ul>
-                {{^userName}}
+                {{^nickname}}
                     <a href="/homeLogin" class="btn btn-success active" role="button">Login</a>
-                {{/userName}}
+                {{/nickname}}
 
             </nav>
             <!-- End of Topbar -->
@@ -175,7 +175,7 @@
                             <!-- Card Header - Dropdown -->
                             <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">김치 프리미엄</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">비트코인 가격(UPBIT)</h6>
                                 <div class="dropdown no-arrow">
                                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
