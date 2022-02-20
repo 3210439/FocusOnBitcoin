@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpSession;
 
+import static org.nell_nell.springboot.common_features.ComFunc.checkUser;
+
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
@@ -28,24 +30,14 @@ public class IndexController {
     public String index(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s) {
         // 가져온 결과를 posts로 전달한다.
         model.addAttribute("posts", postsService.findAllDesc());
-
-        if (user != null) {
-            model.addAttribute("userName", user.getName());
-        }
-        if (user_s != null) {
-            model.addAttribute("nickname", user_s.getName());
-        }
+        checkUser(model, user, user_s);
         return "index";
     }
 
+
     @GetMapping("/")
     public String main(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s) {
-        if (user != null) {
-            model.addAttribute("nickname", user.getName());
-        }
-        if (user_s != null) {
-            model.addAttribute("nickname", user_s.getName());
-        }
+        checkUser(model, user, user_s);
         return "main";
     }
 
@@ -59,13 +51,7 @@ public class IndexController {
     {
         // 가져온 결과를 posts로 전달한다.
         model.addAttribute("article", articleService.findAllDesc());
-
-        if (user != null) {
-            model.addAttribute("nickname", user.getName());
-        }
-        if (user_s != null) {
-            model.addAttribute("nickname", user_s.getName());
-        }
+        checkUser(model, user, user_s);
 
         return "humorBoard";
     }
@@ -77,12 +63,7 @@ public class IndexController {
     }
     @GetMapping("/article/save")
     public String articleSave(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s) {
-        if (user != null) {
-            model.addAttribute("nickname", user.getName());
-        }
-        if (user_s != null) {
-            model.addAttribute("nickname", user_s.getName());
-        }
+        checkUser(model, user, user_s);
 
         return "article-save";
 
