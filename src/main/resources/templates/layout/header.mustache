@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
-<html
-        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html>
 <head>
     <title>스프링부트 웹서비스</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -95,7 +94,7 @@
         </li>
         {{#isAdmin}}
         <!-- Nav Item - Tables -->
-        <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+        <li class="nav-item">
             <a class="nav-link" href="tables.html">
                 <i class="fas fa-fw fa-table"></i>
                 <span>관리자 화면</span></a>

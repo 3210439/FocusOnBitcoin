@@ -3,9 +3,11 @@ package org.nell_nell.springboot.web.dto.article_dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.nell_nell.springboot.domain.article.Article;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class ArticleSaveRequestDto {
     private String title;

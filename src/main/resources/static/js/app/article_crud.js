@@ -18,7 +18,6 @@ var main = {
     save : function () {
         var data = {
             title: $('#title').val(),
-            user_id: $('#user_id').val(),
             content: $('#content1').val(),
             category: $('#category').val()
         };
@@ -31,7 +30,7 @@ var main = {
             data: JSON.stringify(data)
         }).done(function() {
             alert('글이 등록되었습니다.');
-            window.location.href = '/';
+            window.location.href = '/humorBoard';
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
