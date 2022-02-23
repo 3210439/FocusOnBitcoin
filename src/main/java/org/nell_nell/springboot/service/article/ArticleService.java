@@ -51,11 +51,11 @@ public class ArticleService {
         return new ArticleResponseDto(entity);
     }
 
+
     @Transactional(readOnly = true)
-    public List<ArticleListResponseDto> findAllDesc() {
-        return articleRepository.findHumorBoard().stream()
+    public List<ArticleListResponseDto> findByCategory(String category) {
+        return articleRepository.findByCategory(category).stream()
                 .map(ArticleListResponseDto::new)
                 .collect(Collectors.toList());
     }
-
 }
