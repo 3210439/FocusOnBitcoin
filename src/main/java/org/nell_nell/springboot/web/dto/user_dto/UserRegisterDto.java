@@ -8,10 +8,16 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class UserRegisterDto {
 
     private String username;
     private String nickname;
     private String password;
+
+    @Builder
+    public UserRegisterDto(String username, String nickname, String password){
+        this.username = username;
+        this.nickname = nickname;
+        this.password = password;
+    }
 }

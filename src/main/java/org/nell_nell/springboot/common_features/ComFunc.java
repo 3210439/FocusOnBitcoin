@@ -24,7 +24,7 @@ public class ComFunc {
         }
         if (user_s != null) {
             model.addAttribute("nickname", user_s.getName());
-            if(user.getRole().getKey().equals("ROLE_ADMIN"))
+            if(user_s.getRole().getKey().equals("ROLE_ADMIN"))
                 model.addAttribute("isAdmin", user_s.getRole().getKey());
         }
     }

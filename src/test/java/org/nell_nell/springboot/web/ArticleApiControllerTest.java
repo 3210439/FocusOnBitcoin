@@ -62,7 +62,7 @@ public class ArticleApiControllerTest {
 
     @Test
     @WithMockUser(roles = "USER")
-    public void save() throws Exception {
+    public void 게시판_저장() throws Exception {
         //given
         String title = "title";
         String content = "content";
@@ -85,7 +85,7 @@ public class ArticleApiControllerTest {
                 .andExpect(status().isOk());
 
         //then
-        List<Article> all = articleRepository.findHumorBoard();
+        List<Article> all = articleRepository.findByCategory("humor");
         assertThat(all.get(0).getTitle()).isEqualTo(title);
         assertThat(all.get(0).getContent()).isEqualTo(content);
         assertThat(all.get(0).getUser_id()).isEqualTo(user_id);

@@ -74,7 +74,6 @@ public class PostsApiControllerTest {
                 .build();
 
         String url = "http://localhost:" + port + "/api/v1/posts";
-
         //when
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
