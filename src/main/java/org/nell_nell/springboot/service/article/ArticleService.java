@@ -51,6 +51,11 @@ public class ArticleService {
         return new ArticleResponseDto(entity);
     }
 
+    @Transactional
+    public int updateViewCount(Long id) {
+        return articleRepository.updateViewCount(id);
+    }
+
 
     @Transactional(readOnly = true)
     public List<ArticleListResponseDto> findByCategory(String category) {
