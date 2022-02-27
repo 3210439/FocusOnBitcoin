@@ -1,4 +1,5 @@
 {{>layout/header}}
+<link rel="stylesheet" href="/css/custom_layout.css">
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
 
@@ -20,7 +21,7 @@
                     <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
                            aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
+                        <button class="btn btn-info" type="button">
                             <i class="fas fa-search fa-sm"></i>
                         </button>
                     </div>
@@ -62,7 +63,7 @@
                 {{/nickname}}
             </ul>
             {{^nickname}}
-                <a href="/homeLogin" class="btn btn-success active" role="button">Login</a>
+                <a href="/homeLogin" class="btn btn-info active" role="button">Login</a>
             {{/nickname}}
 
         </nav>
@@ -73,36 +74,36 @@
 
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">유머 게시판 글 등록</h1>
+                <h1 class="h3 mb-0 text-gray-800">게시판 글 등록</h1>
             </div>
-
+            <div class="row align-items-center">
+            <div class="col"></div>
             <!-- Content Row -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-4">
-                        <form>
-                            <div class="form-group">
-                                <label for="title">제목</label>
-                                <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요">
-                            </div>
-                            <div class="form-group">
-                                <label for="user_id"> 작성자 </label>
-                                <input type="text" class="form-control" id="user_id" placeholder="작성자를 입력하세요">
-                            </div>
-                            <div class="form-group">
-                                <label for="content"> 내용 </label>
-                                <textarea class="form-control" id="content1" placeholder="내용을 입력하세요"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <input type="hidden" class="form-control" id="category" value="humor">
-                            </div>
-                        </form>
-                        <a href="/" role="button" class="btn btn-secondary">취소</a>
-                        <button type="button" class="btn btn-primary" id="btn-save">등록</button>
+            <div class="col-sm-6">
+                <form>
+                    <div class="form-group">
+                        <select class="form-select" id="category" aria-label="Default select example">
+                            <option selected>카테고리를 선택해주세요</option>
+                            <option value="major">메이저</option>
+                            <option value="alt">알트코인</option>
+                            <option value="humor">유머</option>
+                            <option value="QnA">Q&A</option>
+                        </select>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="title">제목</label>
+                        <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요">
+                    </div>
+                    <div class="form-group">
+                        <label for="content"> 내용 </label>
+                        <textarea class="form-control" id="content1" style="height: 400px" placeholder="내용을 입력하세요"></textarea>
+                    </div>
+                </form>
+                <a href="/" role="button" class="btn btn-secondary">취소</a>
+                <button type="button" class="btn btn-primary" id="btn-save">등록</button>
             </div>
-
+            <div class="col"></div>
+            </div>
         </div>
         <!-- /.container-fluid -->
 

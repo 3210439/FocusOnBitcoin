@@ -20,9 +20,9 @@ public class IndexControllerTest {
     @Test
     public void 메인페이지_로딩() {
         //when
-        String body = this.restTemplate.getForObject("/index", String.class);
+        String body = this.restTemplate.getForObject("/", String.class);
 
         //then
-        assertThat(body).contains("스프링부트로 시작하는 웹 서비스");
+        assertThat(body).contains("비트코인에 집중해");
     }
 }

@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/altCoinBoard","/majorCoinBoard","/freeBoard","/humorBoard","/register","/homeLogin","/","/index", "/css/**","/img/**","/scss/**","/vendor/**", "/images/**", "/js/**", "/h2-console/**", "/profile").permitAll()
+                .antMatchers("/altCoinBoard","/majorCoinBoard","/altBoard","/majorBoard","/freeBoard","/QnA","/humorBoard","/register","/homeLogin","/","/index", "/css/**","/img/**","/scss/**","/vendor/**", "/images/**", "/js/**", "/h2-console/**", "/profile").permitAll()
                 .antMatchers("/api/v1/**").hasRole(Role.USER.name())
                 .anyRequest().authenticated()
                 .and()

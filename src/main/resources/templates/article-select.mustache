@@ -20,7 +20,7 @@
                     <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
                            aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
+                        <button class="btn btn-info" type="button">
                             <i class="fas fa-search fa-sm"></i>
                         </button>
                     </div>
@@ -62,7 +62,7 @@
                 {{/nickname}}
             </ul>
             {{^nickname}}
-                <a href="/homeLogin" class="btn btn-success active" role="button">Login</a>
+                <a href="/homeLogin" class="btn btn-info active" role="button">Login</a>
             {{/nickname}}
 
         </nav>
@@ -73,19 +73,20 @@
 
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">유머 게시판</h1>
-                <a href="/article/save" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                <h1 class="h3 mb-0 text-gray-800">{{category}} 게시판</h1>
+                <a href="/article/save" class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm"><i
                         class="fas fa-download fa-sm text-white-50"></i> 글 생성</a>
             </div>
 
             <!-- Content Row -->
             <div class="row">
-                <table class="table table-horizontal table-bordered">
+                <table class="table table-hover">
                     <thead class="thead-strong">
                     <tr>
                         <th>게시글번호</th>
                         <th>제목</th>
                         <th>작성자</th>
+                        <th>조회수</th>
                         <th>최종수정일</th>
                     </tr>
                     </thead>
@@ -93,8 +94,9 @@
                     {{#article}}
                         <tr>
                             <td>{{id}}</td>
-                            <td><a href="/article/update/{{id}}">{{title}}</a></td>
+                            <td><a href="/article/select/{{id}}">{{title}}</a></td>
                             <td>{{user_id}}</td>
+                            <td>{{view_count}}</td>
                             <td>{{modified_date}}</td>
                         </tr>
                     {{/article}}
