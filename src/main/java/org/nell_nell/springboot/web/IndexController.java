@@ -105,12 +105,21 @@ public class IndexController {
         return "posts-update";
     }
 
+    @GetMapping("/article/select/{id}")
+    public String articleSelect(@PathVariable Long id, Model model) {
+        ArticleResponseDto dto = articleService.findById(id);
+        articleService.updateViewCount(id);
+        model.addAttribute("article", dto);
+
+        return "shown-part";
+    }
+
     @GetMapping("/article/update/{id}")
     public String articleUpdate(@PathVariable Long id, Model model) {
         ArticleResponseDto dto = articleService.findById(id);
         model.addAttribute("article", dto);
 
-        return "shown-part";
+        return "article-update";
     }
 
 }

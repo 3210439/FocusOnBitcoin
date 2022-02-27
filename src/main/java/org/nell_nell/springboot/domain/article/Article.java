@@ -22,10 +22,13 @@ public class Article extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Column(nullable = false)
     private String user_id;
 
+    @Column(nullable = false)
     private String category;
 
+    @Column(columnDefinition = "integer default 0", nullable = false)
     private Long view_count;
 
     private String ip_address;

@@ -86,6 +86,7 @@
                         <th>게시글번호</th>
                         <th>제목</th>
                         <th>작성자</th>
+                        <th>조회수</th>
                         <th>최종수정일</th>
                     </tr>
                     </thead>
@@ -93,8 +94,9 @@
                     {{#article}}
                         <tr>
                             <td>{{id}}</td>
-                            <td><a href="/article/update/{{id}}">{{title}}</a></td>
+                            <td><a href="/article/select/{{id}}">{{title}}</a></td>
                             <td>{{user_id}}</td>
+                            <td>{{view_count}}</td>
                             <td>{{modified_date}}</td>
                         </tr>
                     {{/article}}

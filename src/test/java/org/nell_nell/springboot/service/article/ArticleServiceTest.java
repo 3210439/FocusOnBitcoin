@@ -28,7 +28,7 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void save() {
+    public void 글_등록_테스트() {
 
         //given
         String title = "테스트 게시글";
@@ -52,21 +52,5 @@ public class ArticleServiceTest {
         assertThat(article.getContent()).isEqualTo(content);
         assertThat(article.getCategory()).isEqualTo(category);
         assertThat(article.getUser_id()).isEqualTo(user);
-    }
-
-    @Test
-    public void update() {
-    }
-
-    @Test
-    public void delete() {
-    }
-
-    @Test
-    public void findById() {
-    }
-
-    @Test
-    public void findAllDesc() {
     }
 }
