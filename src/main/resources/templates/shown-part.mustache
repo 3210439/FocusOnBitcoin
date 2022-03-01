@@ -1,33 +1,45 @@
 {{>layout/header}}
 
-<h1>게시글</h1>
-
-<div class="col-md-12">
-    <div class="col-md-4">
-        <form>
-            <div class="form-group">
-                <label for="title">글 번호</label>
-                <p class="fs-6" id="id">{{article.id}}</p>
-            </div>
-            <div class="form-group">
-                <label for="title">제목</label>
-                <p class="fs-1" id="title">{{article.title}}</p>
-            </div>
-            <div class="form-group">
-                <label for="title">조회수</label>
-                <p class="fs-1" id="view_count">{{article.view_count}}</p>
-            </div>
-            <div class="form-group">
-                <label for="author"> 작성자 </label>
-                <p class="fs-4" id="author">{{article.user_id}}</p>
-            </div>
-            <div class="form-group">
-                <label for="content"> 내용 </label>
-                <p class="fs-6" id="content">{{article.content}}</p>
-            </div>
-        </form>
-        <a href="/article/update/{{id}}" class="btn btn-primary">수정하기</a>
+<div class="row h-100">
+    <div class="col"></div>
+    <div class="col-md-7 h-100">
+        <div class="card shadow mb-4 h-100">
+                <!-- Card Header - Dropdown -->
+                <div
+                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-info">게시글</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="chart-area">
+                        <form>
+                            <div class="form-group">
+                                <label for="title">글 번호</label>
+                                <input type="text" class="form-control" id="id" value="{{article.id}}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="title">제목</label>
+                                <input type="text" class="form-control" id="title" value="{{article.title}}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="title">조회수</label>
+                                <p class="fs-6" id="view_count">{{article.view_count}}</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="author"> 작성자 </label>
+                                <input type="text" class="form-control" id="author" value="{{article.user_id}}" readonly>`
+                            </div>
+                            <div class="form-group">
+                                <label for="content"> 내용 </label>
+                                <p class="fs-6" id="content">{{article.content}}</p>
+                            </div>
+                        </form>
+                        <a href="/article/update/{{id}}" class="btn btn-primary">수정하기</a>
+                    </div>
+                </div>
+        </div>
     </div>
+    <div class="col"></div>
 </div>
 
 {{>layout/footer}}
