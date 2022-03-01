@@ -7,12 +7,19 @@ import org.nell_nell.springboot.domain.user.User;
 import org.nell_nell.springboot.service.article.ArticleService;
 import org.nell_nell.springboot.service.posts.PostsService;
 import org.nell_nell.springboot.web.dto.PostsResponseDto;
+import org.nell_nell.springboot.web.dto.article_dto.ArticleListResponseDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleResponseDto;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+
+import java.util.List;
 
 import static org.nell_nell.springboot.common_features.ComFunc.checkUser;
 
@@ -45,39 +52,67 @@ public class IndexController {
     }
 
     @GetMapping("/altBoard")
-    public String altBoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s)
+    public String altBoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s,
+                           @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable)
     {
-        model.addAttribute("article", articleService.findByCategory("alt"));
+        List<ArticleListResponseDto> lst = articleService.findByCategory("alt", pageable);
+        model.addAttribute("article", lst);
         model.addAttribute("category", "알트 코인");
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        model.addAttribute("url", "/altBoard");
+        if(lst.isEmpty())
+            model.addAttribute("notNext", "disabled");
         checkUser(model, user, user_s);
 
         return "article-select";
     }
     @GetMapping("/majorBoard")
-    public String majorBoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s)
+    public String majorBoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s,
+                            @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable)
     {
-        model.addAttribute("article", articleService.findByCategory("major"));
+        List<ArticleListResponseDto> lst = articleService.findByCategory("major", pageable);
+        model.addAttribute("article", lst);
         model.addAttribute("category", "메이저 코인");
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        model.addAttribute("url", "/majorBoard");
+        if(lst.isEmpty())
+            model.addAttribute("notNext", "disabled");
         checkUser(model, user, user_s);
 
         return "article-select";
     }
     @GetMapping("/humorBoard")
-    public String humorBoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s)
+    public String humorBoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s,
+                             @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable)
     {
         // 가져온 결과를 posts로 전달한다.
-        model.addAttribute("article", articleService.findByCategory("humor"));
+        List<ArticleListResponseDto> lst = articleService.findByCategory("humor", pageable);
+        model.addAttribute("article", lst);
         model.addAttribute("category", "유머");
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        model.addAttribute("url", "/humorBoard");
+        if(lst.isEmpty())
+            model.addAttribute("notNext", "disabled");
         checkUser(model, user, user_s);
 
         return "article-select";
     }
 
     @GetMapping("/QnA")
-    public String QnABoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s)
+    public String QnABoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s,
+                           @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable)
     {
-        model.addAttribute("article", articleService.findByCategory("QnA"));
+        List<ArticleListResponseDto> lst = articleService.findByCategory("QnA", pageable);
+        model.addAttribute("article", lst);
         model.addAttribute("category", "Q&A");
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        model.addAttribute("url", "/QnA");
+        if(lst.isEmpty())
+            model.addAttribute("notNext", "disabled");
         checkUser(model, user, user_s);
 
         return "article-select";

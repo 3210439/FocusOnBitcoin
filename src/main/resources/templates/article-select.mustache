@@ -103,7 +103,15 @@
                     </tbody>
                 </table>
             </div>
-
+            <div class="col" style="justify-content:center; display:flex;">
+                <a href="{{url}}?page={{previous}}" role="button" class="btn btn-info" style="margin:5px">이전</a>
+                {{^notNext}}
+                <a href="{{url}}?page={{next}}" role="button" class="btn btn-info" style="margin:5px">이후</a>
+                {{/notNext}}
+                {{#notNext}}
+                    <a href="{{url}}?page={{next}}" role="button" class="btn btn-info disabled" style="margin:5px">이후</a>
+                {{/notNext}}
+            </div>
         </div>
         <!-- /.container-fluid -->
 

@@ -9,6 +9,7 @@ import org.nell_nell.springboot.web.dto.article_dto.ArticleListResponseDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleResponseDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleSaveRequestDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleUpdateRequestDto;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,8 +59,8 @@ public class ArticleService {
 
 
     @Transactional(readOnly = true)
-    public List<ArticleListResponseDto> findByCategory(String category) {
-        return articleRepository.findByCategory(category).stream()
+    public List<ArticleListResponseDto> findByCategory(String category, Pageable pageable) {
+        return articleRepository.findByCategory(category, pageable).stream()
                 .map(ArticleListResponseDto::new)
                 .collect(Collectors.toList());
     }
