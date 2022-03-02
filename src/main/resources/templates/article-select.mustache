@@ -103,7 +103,24 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col" style="justify-content:center; display:flex;">
+            <div class="row">
+                <div class="col">
+                    <div class="input-group">
+                        <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-secondary">검색</button>
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">게시글번호</a>
+                                <a class="dropdown-item" href="#">제목</a>
+                                <a class="dropdown-item" href="#">작성자</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col" style="justify-content:center; display:flex;">
                 <a href="{{url}}?page={{previous}}" role="button" class="btn btn-info" style="margin:5px">이전</a>
                 {{^notNext}}
                 <a href="{{url}}?page={{next}}" role="button" class="btn btn-info" style="margin:5px">이후</a>
@@ -111,12 +128,28 @@
                 {{#notNext}}
                     <a href="{{url}}?page={{next}}" role="button" class="btn btn-info disabled" style="margin:5px">이후</a>
                 {{/notNext}}
+                </div>
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="page_input" placeholder="페이지 선택" aria-label="페이지 선택" aria-describedby="basic-addon2" >
+                        <div class="input-group-append">
+                            <a href="javascript:pageChange();" role="button" class="btn btn-outline-secondary" id="page_btn" type="button">Button</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- /.container-fluid -->
 
     </div>
     <!-- End of Main Content -->
+    <script>
+        function pageChange()
+        {
+            let page = $('#page_input').val();
+            window.location.href = "{{url}}?page=" + page;
+        }
+    </script>
 
     <!-- Footer -->
     <footer class="sticky-footer bg-white">
