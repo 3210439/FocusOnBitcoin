@@ -9,7 +9,6 @@ import org.nell_nell.springboot.service.posts.PostsService;
 import org.nell_nell.springboot.web.dto.PostsResponseDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleListResponseDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleResponseDto;
-import org.nell_nell.springboot.web.dto.article_dto.ArticleSaveRequestDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -18,12 +17,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 import java.util.List;
 
 import static org.nell_nell.springboot.common_features.ComFunc.checkUser;
+import static org.nell_nell.springboot.common_features.ComFunc.searchArticle;
 
 @RequiredArgsConstructor
 @Controller
@@ -48,16 +47,19 @@ public class IndexController {
         return "main";
     }
 
-    @GetMapping("/homeLogin")
+    @GetMapping(value={"/homeLogin", "/homeLogin/{search}"})
     public String homeLogin() {
         return "homeLogin";
     }
 
-    @GetMapping("/altBoard")
+    @GetMapping(value={"/altBoard","/altBoard/{search}"})
     public String altBoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s,
-                           @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable)
+                           @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable,
+                           @PathVariable(required = false) String search)
     {
-        List<ArticleListResponseDto> lst = articleService.findByCategory("alt", pageable);
+        List<ArticleListResponseDto> lst;
+        String category = "alt";
+        lst = searchArticle(search, category, pageable, articleService);
         model.addAttribute("article", lst);
         model.addAttribute("category", "알트 코인");
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
@@ -69,11 +71,14 @@ public class IndexController {
 
         return "article-select";
     }
-    @GetMapping("/majorBoard")
+    @GetMapping(value = {"/majorBoard/{search}","/majorBoard"})
     public String majorBoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s,
-                            @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable)
+                            @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable,
+                             @PathVariable(required = false) String search)
     {
-        List<ArticleListResponseDto> lst = articleService.findByCategory("major", pageable);
+        List<ArticleListResponseDto> lst;
+        String category = "major";
+        lst = searchArticle(search, category, pageable, articleService);
         model.addAttribute("article", lst);
         model.addAttribute("category", "메이저 코인");
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
@@ -85,12 +90,14 @@ public class IndexController {
 
         return "article-select";
     }
-    @GetMapping("/humorBoard")
+    @GetMapping(value = {"/humorBoard", "/humorBoard/{search}"})
     public String humorBoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s,
-                             @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable)
+                             @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable,
+                             @PathVariable(required = false) String search)
     {
-        // 가져온 결과를 posts로 전달한다.
-        List<ArticleListResponseDto> lst = articleService.findByCategory("humor", pageable);
+        List<ArticleListResponseDto> lst;
+        String category = "humor";
+        lst = searchArticle(search, category, pageable, articleService);
         model.addAttribute("article", lst);
         model.addAttribute("category", "유머");
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
@@ -103,11 +110,14 @@ public class IndexController {
         return "article-select";
     }
 
-    @GetMapping("/QnA")
+    @GetMapping(value={"/QnA","/QnA/{search}"})
     public String QnABoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s,
-                           @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable)
+                           @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable,
+                           @PathVariable(required = false) String search)
     {
-        List<ArticleListResponseDto> lst = articleService.findByCategory("QnA", pageable);
+        List<ArticleListResponseDto> lst;
+        String category = "QnA";
+        lst = searchArticle(search, category, pageable, articleService);
         model.addAttribute("article", lst);
         model.addAttribute("category", "Q&A");
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());

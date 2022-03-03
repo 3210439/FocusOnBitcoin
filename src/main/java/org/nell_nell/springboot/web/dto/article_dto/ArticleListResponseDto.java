@@ -9,14 +9,14 @@ import java.time.LocalDateTime;
 public class ArticleListResponseDto {
     private Long id;
     private String title;
-    private String user_id;
+    private String userId;
     private Long view_count;
     private LocalDateTime modified_date;
 
     public ArticleListResponseDto(Article entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
-        this.user_id = entity.getUser_id();
+        this.userId = entity.getUserId();
         this.view_count = entity.getView_count();
         this.modified_date = entity.getModified_date();
     }

@@ -24,9 +24,9 @@ public class ArticleApiController {
     @PostMapping("/api/v1/article")
     public Long save(@RequestBody ArticleSaveRequestDto requestDto, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s) {
         if (user != null)
-            requestDto.setUser_id(user.getName());
+            requestDto.setUserId(user.getName());
         else if (user_s != null)
-            requestDto.setUser_id(user_s.getName());
+            requestDto.setUserId(user_s.getName());
         return articleService.save(requestDto);
     }
 

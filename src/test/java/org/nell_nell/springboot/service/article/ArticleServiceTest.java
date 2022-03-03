@@ -39,7 +39,7 @@ public class ArticleServiceTest {
         articleRepository.save(Article.builder()
                 .title(title)
                 .content(content)
-                .user_id(user)
+                .userId(user)
                 .category(category)
                 .build());
 
@@ -51,6 +51,6 @@ public class ArticleServiceTest {
         assertThat(article.getTitle()).isEqualTo(title);
         assertThat(article.getContent()).isEqualTo(content);
         assertThat(article.getCategory()).isEqualTo(category);
-        assertThat(article.getUser_id()).isEqualTo(user);
+        assertThat(article.getUserId()).isEqualTo(user);
     }
 }

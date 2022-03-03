@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final UserService userService;
     private String[] pathArray = new String[]{"/altCoinBoard","/majorCoinBoard","/altBoard"
-            ,"/majorBoard","/freeBoard","/QnA","/humorBoard","/register"
+            ,"/majorBoard/**","/freeBoard","/QnA","/humorBoard","/register"
             ,"/homeLogin","/","/index", "/css/**","/img/**","/scss/**","/vendor/**"
             , "/images/**", "/js/**", "/h2-console/**", "/profile","/article/select/**"
     };

@@ -12,15 +12,15 @@ import org.nell_nell.springboot.domain.article.Article;
 public class ArticleSaveRequestDto {
     private String title;
     private String content;
-    private String user_id;
+    private String userId;
     private String ip_address;
     private String category;
 
     @Builder
-    public ArticleSaveRequestDto(String title, String content, String user_id, String ip_address, String category) {
+    public ArticleSaveRequestDto(String title, String content, String userId, String ip_address, String category) {
         this.title = title;
         this.content = content;
-        this.user_id = user_id;
+        this.userId = userId;
         this.ip_address = ip_address;
         this.category = category;
     }
@@ -29,7 +29,7 @@ public class ArticleSaveRequestDto {
         return Article.builder()
                 .title(title)
                 .content(content)
-                .user_id(user_id)
+                .userId(userId)
                 .category(category)
                 .ip_address(ip_address)
                 .build();

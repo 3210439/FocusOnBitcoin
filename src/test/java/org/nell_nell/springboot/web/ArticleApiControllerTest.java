@@ -70,13 +70,13 @@ public class ArticleApiControllerTest {
         //given
         String title = "title";
         String content = "content";
-        String user_id = "user_id";
+        String userId = "user_id";
         String ip_address = "111.111.111.111";
         String category = "humor";
         ArticleSaveRequestDto requestDto = ArticleSaveRequestDto.builder()
                 .title(title)
                 .content(content)
-                .user_id(user_id)
+                .userId(userId)
                 .ip_address(ip_address)
                 .category(category)
                 .build();
@@ -92,7 +92,7 @@ public class ArticleApiControllerTest {
         List<Article> all = articleRepository.findByCategory("humor",pageable);
         assertThat(all.get(0).getTitle()).isEqualTo(title);
         assertThat(all.get(0).getContent()).isEqualTo(content);
-        assertThat(all.get(0).getUser_id()).isEqualTo(user_id);
+        assertThat(all.get(0).getUserId()).isEqualTo(userId);
         assertThat(all.get(0).getIp_address()).isEqualTo(ip_address);
     }
 

@@ -16,13 +16,16 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     List<Article> findByCategory(String category, Pageable pageable);
 
-    @Query("SELECT a FROM Article a " +
+    List<Article> findByCategoryAndTitleContaining(String category, String title, Pageable pageable);
+    List<Article> findByCategoryAndUserIdContaining(String category, String userId, Pageable pageable);
+
+/*    @Query("SELECT a FROM Article a " +
             "WHERE " +
             "1=1 "
             + "and a.category LIKE (CASE WHEN :#{#need_val.category} = '' THEN '%%' ELSE  CONCAT('%',:#{#need_val.category},'%') END)"
             + "and a.title LIKE (CASE WHEN :#{#need_val.title} = '' THEN '%%' ELSE  CONCAT('%',:#{#need_val.title},'%') END)"
             + "and a.user_id LIKE (CASE WHEN :#{#need_val.user_id} = '' THEN '%%' ELSE  CONCAT('%',:#{#need_val.user_id},'%') END)")
-    List<Article> findArticle(@Param("need_val") Article article, Pageable pageable);
+    List<Article> findArticle(@Param("need_val") Article article, Pageable pageable);*/
 
     @Modifying
     @Query("update Article a set a.view_count = a.view_count + 1 where a.id = :id")
