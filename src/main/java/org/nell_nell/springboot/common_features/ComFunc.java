@@ -3,8 +3,13 @@ package org.nell_nell.springboot.common_features;
 import org.nell_nell.springboot.config.auth.LoginUser;
 import org.nell_nell.springboot.config.auth.dto.SessionUser;
 import org.nell_nell.springboot.domain.user.User;
+import org.nell_nell.springboot.service.article.ArticleService;
+import org.nell_nell.springboot.web.dto.article_dto.ArticleListResponseDto;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
+
+import java.util.List;
 
 public class ComFunc {
 
@@ -28,4 +33,23 @@ public class ComFunc {
                 model.addAttribute("isAdmin", user_s.getRole().getKey());
         }
     }
+
+    static public List<ArticleListResponseDto> searchArticle(String search, String category, Pageable pageable, ArticleService articleService){
+
+        List<ArticleListResponseDto> lst;
+        if(search == null)
+        {
+            lst = articleService.findByCategory(category, pageable);
+        }
+        else
+        {
+            String[] type1 = search.split(":");
+            if(type1[0].equals("title"))
+                lst = articleService.findByCategoryAndTitleContaining(category, type1[1], pageable);
+            else
+                lst = articleService.findByCategoryAndUserIdContaining(category, type1[1], pageable);
+        }
+        return lst;
+    }
+
 }

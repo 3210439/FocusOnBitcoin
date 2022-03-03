@@ -64,4 +64,16 @@ public class ArticleService {
                 .map(ArticleListResponseDto::new)
                 .collect(Collectors.toList());
     }
+    @Transactional(readOnly = true)
+    public List<ArticleListResponseDto> findByCategoryAndTitleContaining(String category, String title, Pageable pageable) {
+        return articleRepository.findByCategoryAndTitleContaining(category, title, pageable).stream()
+                .map(ArticleListResponseDto::new)
+                .collect(Collectors.toList());
+    }
+    @Transactional(readOnly = true)
+    public List<ArticleListResponseDto> findByCategoryAndUserIdContaining(String category, String userId, Pageable pageable) {
+        return articleRepository.findByCategoryAndUserIdContaining(category, userId, pageable).stream()
+                .map(ArticleListResponseDto::new)
+                .collect(Collectors.toList());
+    }
 }

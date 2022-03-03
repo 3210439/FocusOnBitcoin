@@ -7,14 +7,14 @@ public class ArticleResponseDto {
     private Long id;
     private String title;
     private String content;
-    private String user_id;
+    private String userId;
     private long view_count;
 
     public ArticleResponseDto(Article entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
-        this.user_id = entity.getUser_id();
+        this.userId = entity.getUserId();
         this.view_count = entity.getView_count();
     }
 }
