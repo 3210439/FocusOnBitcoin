@@ -57,6 +57,12 @@ public class ArticleService {
         return articleRepository.updateViewCount(id);
     }
 
+    @Transactional(readOnly = true)
+    public List<ArticleListResponseDto> findTop4AllByOrderByViewCountDesc() {
+            return articleRepository.findTop4AllByOrderByViewCountDesc().stream()
+                .map(ArticleListResponseDto::new)
+                .collect(Collectors.toList());
+    }
 
     @Transactional(readOnly = true)
     public List<ArticleListResponseDto> findByCategory(String category, Pageable pageable) {

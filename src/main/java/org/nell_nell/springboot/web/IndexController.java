@@ -44,6 +44,8 @@ public class IndexController {
     @GetMapping("/")
     public String main(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s) {
         checkUser(model, user, user_s);
+        List<ArticleListResponseDto> lst = articleService.findTop4AllByOrderByViewCountDesc();
+        model.addAttribute("article", lst);
         return "main";
     }
 
