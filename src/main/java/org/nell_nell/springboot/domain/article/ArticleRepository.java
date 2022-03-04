@@ -16,6 +16,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     List<Article> findByCategory(String category, Pageable pageable);
 
+    List<Article> findTop4AllByOrderByViewCountDesc();
+
     List<Article> findByCategoryAndTitleContaining(String category, String title, Pageable pageable);
     List<Article> findByCategoryAndUserIdContaining(String category, String userId, Pageable pageable);
 
@@ -28,7 +30,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findArticle(@Param("need_val") Article article, Pageable pageable);*/
 
     @Modifying
-    @Query("update Article a set a.view_count = a.view_count + 1 where a.id = :id")
+    @Query("update Article a set a.viewCount = a.viewCount + 1 where a.id = :id")
     int updateViewCount(Long id);
 
 }
