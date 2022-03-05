@@ -1,0 +1,184 @@
+{{>layout/header}}
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+            <!-- Sidebar Toggle (Topbar) -->
+            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                <i class="fa fa-bars"></i>
+            </button>
+
+            <!-- Topbar Search -->
+            <form
+                    class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                           aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-info" type="button">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+                {{#nickname}}
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{nickname}}</span>
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Profile
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Settings
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Activity Log
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+                {{/nickname}}
+            </ul>
+            {{^nickname}}
+                <a href="/homeLogin" class="btn btn-info active" role="button">Login</a>
+            {{/nickname}}
+
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">유저 정보</h1>
+            </div>
+
+            <!-- Content Row -->
+            <div class="row">
+                <table class="table table-hover">
+                    <thead class="thead-strong">
+                    <tr>
+                        <th>이메일</th>
+                        <th>닉네임</th>
+                        <th>사진</th>
+                        <th>권한</th>
+                        <th>생성일</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbody">
+                    {{#user}}
+                        <tr>
+                            <td><a href="/user/update/{{id}}">{{username}}</a></td>
+                            <td>{{name}}</td>
+                            <td>{{picture}}</td>
+                            <td>{{role}}</td>
+                            <td>{{created_date}}</td>
+                        </tr>
+                    {{/user}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="sch_bar" aria-label="Text input with segmented dropdown button">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-secondary" onclick="searchByType()">검색</button>
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#" onclick="javascript:setSearchType('name')">이름</a>
+                                <a class="dropdown-item" href="#" onclick="javascript:setSearchType('email')">이메일</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col" style="justify-content:center; display:flex;">
+                    <a href="{{url}}?page={{previous}}" role="button" class="btn btn-info mb-3" style="margin:5px">이전</a>
+                    {{^notNext}}
+                        <a href="{{url}}?page={{next}}" role="button" class="btn btn-info mb-3" style="margin:5px">이후</a>
+                    {{/notNext}}
+                    {{#notNext}}
+                        <a href="{{url}}?page={{next}}" role="button" class="btn btn-info disabled mb-3" style="margin:5px">이후</a>
+                    {{/notNext}}
+                </div>
+                <div class="col">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="page_input" placeholder="페이지 선택" aria-label="페이지 선택" aria-describedby="basic-addon2" >
+                        <div class="input-group-append">
+                            <a href="javascript:pageChange();" role="button" class="btn btn-outline-secondary" id="page_btn" type="button">Button</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+        <input id="sch_con" type="hidden" name="sch_con" value="">
+        <input id="sch_type" type="hidden" name="sch_type" value="">
+    </div>
+    <!-- End of Main Content -->
+    <script>
+        function pageChange()
+        {
+            let page = $('#page_input').val();
+            window.location.href = "{{url}}?page=" + page;
+        }
+        function setSearchType(type1)
+        {
+            $('#sch_type').val(type1);
+        }
+        function searchByType()
+        {
+            let t = $('#sch_type').val();
+            let s = $('#sch_bar').val();
+            let hop = t +":"+ s;
+            if(t=="") {
+                alert("타입을 지정해주세요")
+                return
+            }
+            if(s=="") {
+                alert("값을 입력해주세요")
+                return
+            }
+
+            window.location.href ="{{url}}/"+hop
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Your Website 2021</span>
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
+
+</div>
+<!-- End of Content Wrapper -->
+{{>layout/footer}}

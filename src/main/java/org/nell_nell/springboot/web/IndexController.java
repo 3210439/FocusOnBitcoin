@@ -6,9 +6,11 @@ import org.nell_nell.springboot.config.auth.dto.SessionUser;
 import org.nell_nell.springboot.domain.user.User;
 import org.nell_nell.springboot.service.article.ArticleService;
 import org.nell_nell.springboot.service.posts.PostsService;
+import org.nell_nell.springboot.service.user.UserService;
 import org.nell_nell.springboot.web.dto.PostsResponseDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleListResponseDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleResponseDto;
+import org.nell_nell.springboot.web.dto.user_dto.UserListResponseDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -21,8 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-import static org.nell_nell.springboot.common_features.ComFunc.checkUser;
-import static org.nell_nell.springboot.common_features.ComFunc.searchArticle;
+import static org.nell_nell.springboot.common_features.ComFunc.*;
 
 @RequiredArgsConstructor
 @Controller
@@ -30,6 +31,7 @@ public class IndexController {
 
     private final PostsService postsService;
     private final ArticleService articleService;
+    private final UserService userService;
     //private final HttpSession httpSession;
 
     @GetMapping("/index")
@@ -60,13 +62,13 @@ public class IndexController {
                            @PathVariable(required = false) String search)
     {
         List<ArticleListResponseDto> lst;
+        hasSearchCondition("/altBoard", search, model);
         String category = "alt";
         lst = searchArticle(search, category, pageable, articleService);
         model.addAttribute("article", lst);
         model.addAttribute("category", "알트 코인");
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
         model.addAttribute("next", pageable.next().getPageNumber());
-        model.addAttribute("url", "/altBoard");
         if(lst.isEmpty())
             model.addAttribute("notNext", "disabled");
         checkUser(model, user, user_s);
@@ -79,13 +81,13 @@ public class IndexController {
                              @PathVariable(required = false) String search)
     {
         List<ArticleListResponseDto> lst;
+        hasSearchCondition("/majorBoard", search, model);
         String category = "major";
         lst = searchArticle(search, category, pageable, articleService);
         model.addAttribute("article", lst);
         model.addAttribute("category", "메이저 코인");
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
         model.addAttribute("next", pageable.next().getPageNumber());
-        model.addAttribute("url", "/majorBoard");
         if(lst.isEmpty())
             model.addAttribute("notNext", "disabled");
         checkUser(model, user, user_s);
@@ -98,13 +100,13 @@ public class IndexController {
                              @PathVariable(required = false) String search)
     {
         List<ArticleListResponseDto> lst;
+        hasSearchCondition("/humorBoard", search, model);
         String category = "humor";
         lst = searchArticle(search, category, pageable, articleService);
         model.addAttribute("article", lst);
         model.addAttribute("category", "유머");
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
         model.addAttribute("next", pageable.next().getPageNumber());
-        model.addAttribute("url", "/humorBoard");
         if(lst.isEmpty())
             model.addAttribute("notNext", "disabled");
         checkUser(model, user, user_s);
@@ -118,18 +120,34 @@ public class IndexController {
                            @PathVariable(required = false) String search)
     {
         List<ArticleListResponseDto> lst;
+        hasSearchCondition("/QnA", search, model);
         String category = "QnA";
         lst = searchArticle(search, category, pageable, articleService);
         model.addAttribute("article", lst);
         model.addAttribute("category", "Q&A");
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
         model.addAttribute("next", pageable.next().getPageNumber());
-        model.addAttribute("url", "/QnA");
         if(lst.isEmpty())
             model.addAttribute("notNext", "disabled");
         checkUser(model, user, user_s);
 
         return "article-select";
+    }
+    @GetMapping(value={"/user","/user/{search}"})
+    public String userList(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s,
+                           @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable,
+                           @PathVariable(required = false) String search)
+    {
+        List<UserListResponseDto> lst = searchUser(search, pageable, userService);
+        hasSearchCondition("/user",search, model);
+        model.addAttribute("user", lst);
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        if(lst.isEmpty())
+            model.addAttribute("notNext", "disabled");
+        checkUser(model, user, user_s);
+
+        return "user-select";
     }
 
     @GetMapping("/posts/save")

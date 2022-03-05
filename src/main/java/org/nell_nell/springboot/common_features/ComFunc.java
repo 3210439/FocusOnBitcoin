@@ -4,7 +4,9 @@ import org.nell_nell.springboot.config.auth.LoginUser;
 import org.nell_nell.springboot.config.auth.dto.SessionUser;
 import org.nell_nell.springboot.domain.user.User;
 import org.nell_nell.springboot.service.article.ArticleService;
+import org.nell_nell.springboot.service.user.UserService;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleListResponseDto;
+import org.nell_nell.springboot.web.dto.user_dto.UserListResponseDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
@@ -50,6 +52,32 @@ public class ComFunc {
                 lst = articleService.findByCategoryAndUserIdContaining(category, type1[1], pageable);
         }
         return lst;
+    }
+
+    static public List<UserListResponseDto> searchUser(String search, Pageable pageable, UserService userService){
+        List<UserListResponseDto> lst;
+        if(search == null){
+            lst = userService.findAll(pageable);
+        }
+        else
+        {
+            String[] type1 = search.split(":");
+            if(type1[0].equals("email"))
+                lst = userService.findByEmailContaining(type1[1], pageable);
+            else
+                lst = userService.findByNameContaining(type1[1], pageable);
+        }
+        return lst;
+    }
+
+    static public void hasSearchCondition(String url,String search, Model model){
+        String[] type1 = null;
+        if (search != null)
+            type1 = search.split(":");
+        if (type1 == null)
+            model.addAttribute("url", url);
+        else
+            model.addAttribute("url", url+"/"+type1[0]+":"+type1[1]);
     }
 
 }
