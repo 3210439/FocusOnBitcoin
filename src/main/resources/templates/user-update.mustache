@@ -1,0 +1,39 @@
+{{>layout/header}}
+
+<h1 style="text-align: center; margin:20px">유저정보 수정</h1>
+
+<div class="row">
+    <div class="col"></div>
+    <div class="col-md-6">
+        <form>
+            <div class="form-group">
+                <label for="title">유저 번호</label>
+                <input type="text" class="form-control" id="id" value="{{user.id}}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="title">유저 아이디</label>
+                <input type="text" class="form-control" id="username" value="{{user.username}}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="author"> 닉네임 </label>
+                <input type="text" class="form-control" id="name" value="{{user.name}}">`
+            </div>
+            <div class="form-group">
+                <label for="content"> 사진 </label>
+                <input type="text" class="form-control" id="picture" value="{{user.picture}}">
+            </div>
+            <div class="form-group">
+                <label for="content"> 권한 </label>
+                <input type="text" class="form-control" id="role" value="{{user.role}}">
+            </div>
+        </form>
+        <a href="/" role="button" class="btn btn-secondary">취소</a>
+        <button type="button" class="btn btn-primary" id="btn-update">수정 완료</button>
+        <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
+    </div>
+    <div class="col"></div>
+</div>
+
+<!--index.js 추가-->
+<script src="/js/app/user_crud.js"></script>
+{{>layout/footer}}

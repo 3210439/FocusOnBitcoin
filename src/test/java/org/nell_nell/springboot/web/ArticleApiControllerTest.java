@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -63,16 +65,18 @@ public class ArticleApiControllerTest {
     @Test
     @WithMockUser(roles = "USER")
     public void 게시판_저장() throws Exception {
+        Pageable pageable = PageRequest.of(0, 8);
+
         //given
         String title = "title";
         String content = "content";
-        String user_id = "user_id";
+        String userId = "user_id";
         String ip_address = "111.111.111.111";
         String category = "humor";
         ArticleSaveRequestDto requestDto = ArticleSaveRequestDto.builder()
                 .title(title)
                 .content(content)
-                .user_id(user_id)
+                .userId(userId)
                 .ip_address(ip_address)
                 .category(category)
                 .build();
@@ -85,10 +89,10 @@ public class ArticleApiControllerTest {
                 .andExpect(status().isOk());
 
         //then
-        List<Article> all = articleRepository.findByCategory("humor");
+        List<Article> all = articleRepository.findByCategory("humor",pageable);
         assertThat(all.get(0).getTitle()).isEqualTo(title);
         assertThat(all.get(0).getContent()).isEqualTo(content);
-        assertThat(all.get(0).getUser_id()).isEqualTo(user_id);
+        assertThat(all.get(0).getUserId()).isEqualTo(userId);
         assertThat(all.get(0).getIp_address()).isEqualTo(ip_address);
     }
 

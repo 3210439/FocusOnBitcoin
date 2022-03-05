@@ -22,24 +22,24 @@ public class Article extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(nullable = false)
-    private String user_id;
+    @Column(name = "user_id", nullable = false)
+    private String userId;
 
     @Column(nullable = false)
     private String category;
 
-    @Column(columnDefinition = "integer default 0", nullable = false)
-    private Long view_count;
+    @Column(name="view_count", columnDefinition = "integer default 0", nullable = false)
+    private Long viewCount;
 
     private String ip_address;
 
     @Builder
-    public Article(String title, String content, String user_id, String ip_address, long view_count, String category) {
+    public Article(String title, String content, String userId, String ip_address, long viewCount, String category) {
         this.title = title;
         this.content = content;
-        this.user_id = user_id;
+        this.userId = userId;
         this.ip_address = ip_address;
-        this.view_count = view_count;
+        this.viewCount = viewCount;
         this.category = category;
     }
 

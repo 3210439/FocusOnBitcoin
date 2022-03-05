@@ -6,15 +6,24 @@ import org.nell_nell.springboot.config.auth.dto.SessionUser;
 import org.nell_nell.springboot.domain.user.User;
 import org.nell_nell.springboot.service.article.ArticleService;
 import org.nell_nell.springboot.service.posts.PostsService;
+import org.nell_nell.springboot.service.user.UserService;
 import org.nell_nell.springboot.web.dto.PostsResponseDto;
+import org.nell_nell.springboot.web.dto.article_dto.ArticleListResponseDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleResponseDto;
+import org.nell_nell.springboot.web.dto.user_dto.UserListResponseDto;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import static org.nell_nell.springboot.common_features.ComFunc.checkUser;
+
+import java.util.List;
+
+import static org.nell_nell.springboot.common_features.ComFunc.*;
 
 @RequiredArgsConstructor
 @Controller
@@ -22,6 +31,7 @@ public class IndexController {
 
     private final PostsService postsService;
     private final ArticleService articleService;
+    private final UserService userService;
     //private final HttpSession httpSession;
 
     @GetMapping("/index")
@@ -36,51 +46,115 @@ public class IndexController {
     @GetMapping("/")
     public String main(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s) {
         checkUser(model, user, user_s);
+        List<ArticleListResponseDto> lst = articleService.findTop4AllByOrderByViewCountDesc();
+        model.addAttribute("article", lst);
         return "main";
     }
 
-    @GetMapping("/homeLogin")
+    @GetMapping(value={"/homeLogin", "/homeLogin/{search}"})
     public String homeLogin() {
         return "homeLogin";
     }
 
-    @GetMapping("/altBoard")
-    public String altBoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s)
+    @GetMapping(value={"/altBoard","/altBoard/{search}"})
+    public String altBoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s,
+                           @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable,
+                           @PathVariable(required = false) String search)
     {
-        model.addAttribute("article", articleService.findByCategory("alt"));
+        List<ArticleListResponseDto> lst;
+        hasSearchCondition("/altBoard", search, model);
+        String category = "alt";
+        lst = searchArticle(search, category, pageable, articleService);
+        model.addAttribute("article", lst);
         model.addAttribute("category", "알트 코인");
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        if(lst.isEmpty())
+            model.addAttribute("notNext", "disabled");
         checkUser(model, user, user_s);
 
         return "article-select";
     }
-    @GetMapping("/majorBoard")
-    public String majorBoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s)
+    @GetMapping(value = {"/majorBoard/{search}","/majorBoard"})
+    public String majorBoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s,
+                            @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable,
+                             @PathVariable(required = false) String search)
     {
-        model.addAttribute("article", articleService.findByCategory("major"));
+        List<ArticleListResponseDto> lst;
+        hasSearchCondition("/majorBoard", search, model);
+        String category = "major";
+        lst = searchArticle(search, category, pageable, articleService);
+        model.addAttribute("article", lst);
         model.addAttribute("category", "메이저 코인");
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        if(lst.isEmpty())
+            model.addAttribute("notNext", "disabled");
         checkUser(model, user, user_s);
 
         return "article-select";
     }
-    @GetMapping("/humorBoard")
-    public String humorBoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s)
+    @GetMapping(value = {"/humorBoard", "/humorBoard/{search}"})
+    public String humorBoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s,
+                             @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable,
+                             @PathVariable(required = false) String search)
     {
-        // 가져온 결과를 posts로 전달한다.
-        model.addAttribute("article", articleService.findByCategory("humor"));
+        List<ArticleListResponseDto> lst;
+        hasSearchCondition("/humorBoard", search, model);
+        String category = "humor";
+        lst = searchArticle(search, category, pageable, articleService);
+        model.addAttribute("article", lst);
         model.addAttribute("category", "유머");
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        if(lst.isEmpty())
+            model.addAttribute("notNext", "disabled");
         checkUser(model, user, user_s);
 
         return "article-select";
     }
 
-    @GetMapping("/QnA")
-    public String QnABoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s)
+    @GetMapping(value={"/QnA","/QnA/{search}"})
+    public String QnABoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s,
+                           @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable,
+                           @PathVariable(required = false) String search)
     {
-        model.addAttribute("article", articleService.findByCategory("QnA"));
+        List<ArticleListResponseDto> lst;
+        hasSearchCondition("/QnA", search, model);
+        String category = "QnA";
+        lst = searchArticle(search, category, pageable, articleService);
+        model.addAttribute("article", lst);
         model.addAttribute("category", "Q&A");
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        if(lst.isEmpty())
+            model.addAttribute("notNext", "disabled");
         checkUser(model, user, user_s);
 
         return "article-select";
+    }
+    @GetMapping(value={"/user","/user/{search}"})
+    public String userList(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s,
+                           @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable,
+                           @PathVariable(required = false) String search)
+    {
+        List<UserListResponseDto> lst = searchUser(search, pageable, userService);
+        hasSearchCondition("/user",search, model);
+        model.addAttribute("user", lst);
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        if(lst.isEmpty())
+            model.addAttribute("notNext", "disabled");
+        checkUser(model, user, user_s);
+
+        return "user-select";
+    }
+    @GetMapping("/user/update/{id}")
+    public String userUpdate(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s,
+                             @PathVariable Long id){
+        checkUser(model, user, user_s);
+        model.addAttribute("user", userService.findById(id));
+        return "user-update";
     }
 
     @GetMapping("/posts/save")
@@ -115,7 +189,7 @@ public class IndexController {
     }
 
     @GetMapping("/article/update/{id}")
-    public String articleUpdate(@PathVariable Long id, Model model) {
+    public String articleUpdate(@PathVariable Long id, Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s) {
         ArticleResponseDto dto = articleService.findById(id);
         model.addAttribute("article", dto);
 

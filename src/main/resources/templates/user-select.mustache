@@ -73,9 +73,7 @@
 
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">{{category}} 게시판</h1>
-                <a href="/article/save" class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm"><i
-                        class="fas fa-download fa-sm text-white-50"></i> 글 생성</a>
+                <h1 class="h3 mb-0 text-gray-800">유저 정보</h1>
             </div>
 
             <!-- Content Row -->
@@ -83,23 +81,23 @@
                 <table class="table table-hover">
                     <thead class="thead-strong">
                     <tr>
-                        <th>게시글번호</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>조회수</th>
-                        <th>최종수정일</th>
+                        <th>이메일</th>
+                        <th>닉네임</th>
+                        <th>사진</th>
+                        <th>권한</th>
+                        <th>생성일</th>
                     </tr>
                     </thead>
                     <tbody id="tbody">
-                    {{#article}}
+                    {{#user}}
                         <tr>
-                            <td>{{id}}</td>
-                            <td><a href="/article/select/{{id}}">{{title}}</a></td>
-                            <td>{{userId}}</td>
-                            <td>{{viewCount}}</td>
-                            <td>{{modified_date}}</td>
+                            <td><a href="/user/update/{{id}}">{{username}}</a></td>
+                            <td>{{name}}</td>
+                            <td>{{picture}}</td>
+                            <td>{{role}}</td>
+                            <td>{{created_date}}</td>
                         </tr>
-                    {{/article}}
+                    {{/user}}
                     </tbody>
                 </table>
             </div>
@@ -113,20 +111,20 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#" onclick="javascript:setSearchType('title')">제목</a>
-                                <a class="dropdown-item" href="#" onclick="javascript:setSearchType('userId')">작성자</a>
+                                <a class="dropdown-item" href="#" onclick="javascript:setSearchType('name')">이름</a>
+                                <a class="dropdown-item" href="#" onclick="javascript:setSearchType('email')">이메일</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col" style="justify-content:center; display:flex;">
-                <a href="{{url}}?page={{previous}}" role="button" class="btn btn-info mb-3" style="margin:5px">이전</a>
-                {{^notNext}}
-                <a href="{{url}}?page={{next}}" role="button" class="btn btn-info mb-3" style="margin:5px">이후</a>
-                {{/notNext}}
-                {{#notNext}}
-                    <a href="{{url}}?page={{next}}" role="button" class="btn btn-info disabled mb-3" style="margin:5px">이후</a>
-                {{/notNext}}
+                    <a href="{{url}}?page={{previous}}" role="button" class="btn btn-info mb-3" style="margin:5px">이전</a>
+                    {{^notNext}}
+                        <a href="{{url}}?page={{next}}" role="button" class="btn btn-info mb-3" style="margin:5px">이후</a>
+                    {{/notNext}}
+                    {{#notNext}}
+                        <a href="{{url}}?page={{next}}" role="button" class="btn btn-info disabled mb-3" style="margin:5px">이후</a>
+                    {{/notNext}}
                 </div>
                 <div class="col">
                     <div class="input-group">

@@ -20,6 +20,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomOAuth2UserService customOAuth2UserService;
     private final UserService userService;
+    private String[] pathArray = new String[]{"/altCoinBoard","/majorCoinBoard","/altBoard"
+            ,"/majorBoard/**","/freeBoard","/QnA","/humorBoard","/register"
+            ,"/homeLogin","/","/index", "/css/**","/img/**","/scss/**","/vendor/**"
+            , "/images/**", "/js/**", "/h2-console/**", "/profile","/article/select/**"
+    };
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -28,8 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/altCoinBoard","/majorCoinBoard","/altBoard","/majorBoard","/freeBoard","/QnA","/humorBoard","/register","/homeLogin","/","/index", "/css/**","/img/**","/scss/**","/vendor/**", "/images/**", "/js/**", "/h2-console/**", "/profile").permitAll()
+                .antMatchers(pathArray).permitAll()
                 .antMatchers("/api/v1/**").hasRole(Role.USER.name())
+                .antMatchers("/user/**").hasRole(Role.ADMIN.name())
                 .anyRequest().authenticated()
                 .and()
                 .logout()

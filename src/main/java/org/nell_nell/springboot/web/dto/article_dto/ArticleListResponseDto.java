@@ -9,15 +9,15 @@ import java.time.LocalDateTime;
 public class ArticleListResponseDto {
     private Long id;
     private String title;
-    private String user_id;
-    private Long view_count;
+    private String userId;
+    private Long viewCount;
     private LocalDateTime modified_date;
 
     public ArticleListResponseDto(Article entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
-        this.user_id = entity.getUser_id();
-        this.view_count = entity.getView_count();
+        this.userId = entity.getUserId();
+        this.viewCount = entity.getViewCount();
         this.modified_date = entity.getModified_date();
     }
 }
