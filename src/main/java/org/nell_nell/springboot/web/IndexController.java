@@ -149,6 +149,13 @@ public class IndexController {
 
         return "user-select";
     }
+    @GetMapping("/user/update/{id}")
+    public String userUpdate(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s,
+                             @PathVariable Long id){
+        checkUser(model, user, user_s);
+        model.addAttribute("user", userService.findById(id));
+        return "user-update";
+    }
 
     @GetMapping("/posts/save")
     public String postsSave() {
@@ -182,7 +189,7 @@ public class IndexController {
     }
 
     @GetMapping("/article/update/{id}")
-    public String articleUpdate(@PathVariable Long id, Model model) {
+    public String articleUpdate(@PathVariable Long id, Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s) {
         ArticleResponseDto dto = articleService.findById(id);
         model.addAttribute("article", dto);
 
