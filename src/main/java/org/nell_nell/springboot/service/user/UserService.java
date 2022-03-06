@@ -37,6 +37,9 @@ public class UserService {
         if (!userRepository.findByEmail(userDto.getUsername()).equals(Optional.empty())) {
             throw new AlreadyRegisteredUserException();
         }
+        if (!userRepository.findByName(userDto.getUsername()).equals(Optional.empty())){
+            throw new AlreadyRegisteredUserException();
+        }
         String str = passwordEncoder.encode(userDto.getPassword());
         User user = User.builder()
                 .name(userDto.getNickname())
