@@ -16,7 +16,12 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     List<Article> findByCategory(String category, Pageable pageable);
 
-    List<Article> findTop4AllByOrderByViewCountDesc();
+    List<Article> findTop4ByCategoryNotOrderByViewCountDesc(String category);
+
+    //@Query("SELECT a FROM Article a WHERE a.category NOT IN ('announcement') LIMIT 4 ORDER BY a.viewCount DESC")
+    //List<Article> popularArticle();
+
+    List<Article> findTop2ByCategory(String category);
 
     List<Article> findByCategoryAndTitleContaining(String category, String title, Pageable pageable);
     List<Article> findByCategoryAndUserIdContaining(String category, String userId, Pageable pageable);

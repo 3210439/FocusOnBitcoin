@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final UserService userService;
     private String[] pathArray = new String[]{"/altCoinBoard","/majorCoinBoard","/altBoard"
-            ,"/majorBoard/**","/freeBoard","/QnA","/humorBoard","/register"
+            ,"/majorBoard/**","/freeBoard","/QnA","/humorBoard","/register","/chart"
             ,"/homeLogin","/","/index", "/css/**","/img/**","/scss/**","/vendor/**"
             , "/images/**", "/js/**", "/h2-console/**", "/profile","/article/select/**"
     };
@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(pathArray).permitAll()
-                .antMatchers("/api/v1/**").hasRole(Role.USER.name())
+                .antMatchers("/api/v1/**").hasAnyRole(Role.USER.name(),Role.ADMIN.name())
                 .antMatchers("/user/**").hasRole(Role.ADMIN.name())
                 .anyRequest().authenticated()
                 .and()

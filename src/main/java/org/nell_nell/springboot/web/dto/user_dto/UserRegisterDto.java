@@ -6,7 +6,6 @@ import lombok.*;
  * 유저 회원가입용 Dto
  */
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserRegisterDto {
 

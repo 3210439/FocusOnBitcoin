@@ -2,8 +2,10 @@ package org.nell_nell.springboot.service.article;
 
 import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
+import org.nell_nell.springboot.config.auth.dto.SessionUser;
 import org.nell_nell.springboot.domain.article.Article;
 import org.nell_nell.springboot.domain.article.ArticleRepository;
+import org.nell_nell.springboot.domain.user.User;
 import org.nell_nell.springboot.web.dto.PostsSaveRequestDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleListResponseDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleResponseDto;
@@ -13,7 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +53,24 @@ public class ArticleService {
     @Transactional(readOnly = true)
     public ArticleResponseDto findById(Long id) {
         Article entity = articleRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다."+id));
+                .orElseThrow(() -> new IllegalArgumentException("해당 글이 없습니다."+id));
+
+        return new ArticleResponseDto(entity);
+    }
+    @Transactional(readOnly = true)
+    public ArticleResponseDto findByIdAndCheckUser(Long id, SessionUser user, User user_s) {
+        Article entity = articleRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 글이 없습니다."+id));
+        String userId = entity.getUserId();
+        if (user != null){
+            if (userId != user.getName())
+                throw new IllegalArgumentException("해당 글의 수정 권한이 없습니다..");
+        }
+        else if (user_s != null){
+            if (userId != user_s.getName())
+                throw new IllegalArgumentException("해당 글의 수정 권한이 없습니다..");
+        }
+
         return new ArticleResponseDto(entity);
     }
 
@@ -59,7 +81,7 @@ public class ArticleService {
 
     @Transactional(readOnly = true)
     public List<ArticleListResponseDto> findTop4AllByOrderByViewCountDesc() {
-            return articleRepository.findTop4AllByOrderByViewCountDesc().stream()
+            return articleRepository.findTop4ByCategoryNotOrderByViewCountDesc("announcement").stream()
                 .map(ArticleListResponseDto::new)
                 .collect(Collectors.toList());
     }
@@ -70,6 +92,16 @@ public class ArticleService {
                 .map(ArticleListResponseDto::new)
                 .collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true)
+    public void showAnnouncement(Model model) {
+
+        List<ArticleListResponseDto> lst = articleRepository.findTop2ByCategory("announcement").stream()
+                .map(ArticleListResponseDto::new)
+                .collect(Collectors.toList());
+        model.addAttribute("announcement", lst);
+    }
+
     @Transactional(readOnly = true)
     public List<ArticleListResponseDto> findByCategoryAndTitleContaining(String category, String title, Pageable pageable) {
         return articleRepository.findByCategoryAndTitleContaining(category, title, pageable).stream()
