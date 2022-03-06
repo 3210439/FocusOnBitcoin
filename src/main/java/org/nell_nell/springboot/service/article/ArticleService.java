@@ -15,7 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,11 +64,11 @@ public class ArticleService {
         String userId = entity.getUserId();
         if (user != null){
             if (userId != user.getName())
-                throw new IllegalArgumentException("해당 글의 수정 권한이 없습니다.."+id);
+                throw new IllegalArgumentException("해당 글의 수정 권한이 없습니다..");
         }
         else if (user_s != null){
             if (userId != user_s.getName())
-                throw new IllegalArgumentException("해당 글의 수정 권한이 없습니다.."+id);
+                throw new IllegalArgumentException("해당 글의 수정 권한이 없습니다..");
         }
 
         return new ArticleResponseDto(entity);
@@ -78,7 +81,7 @@ public class ArticleService {
 
     @Transactional(readOnly = true)
     public List<ArticleListResponseDto> findTop4AllByOrderByViewCountDesc() {
-            return articleRepository.findTop4AllByOrderByViewCountDesc().stream()
+            return articleRepository.findTop4ByCategoryNotOrderByViewCountDesc("announcement").stream()
                 .map(ArticleListResponseDto::new)
                 .collect(Collectors.toList());
     }
@@ -89,6 +92,16 @@ public class ArticleService {
                 .map(ArticleListResponseDto::new)
                 .collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true)
+    public void showAnnouncement(Model model) {
+
+        List<ArticleListResponseDto> lst = articleRepository.findTop2ByCategory("announcement").stream()
+                .map(ArticleListResponseDto::new)
+                .collect(Collectors.toList());
+        model.addAttribute("announcement", lst);
+    }
+
     @Transactional(readOnly = true)
     public List<ArticleListResponseDto> findByCategoryAndTitleContaining(String category, String title, Pageable pageable) {
         return articleRepository.findByCategoryAndTitleContaining(category, title, pageable).stream()

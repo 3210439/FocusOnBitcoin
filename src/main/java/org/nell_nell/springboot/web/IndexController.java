@@ -48,6 +48,8 @@ public class IndexController {
         checkUser(model, user, user_s);
         List<ArticleListResponseDto> lst = articleService.findTop4AllByOrderByViewCountDesc();
         model.addAttribute("article", lst);
+        articleService.showAnnouncement(model);
+
         return "main";
     }
 
@@ -194,6 +196,12 @@ public class IndexController {
         model.addAttribute("article", dto);
 
         return "article-update";
+    }
+
+    @GetMapping("/chart")
+    public String showChart(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s) {
+
+        return "chart";
     }
 
 }

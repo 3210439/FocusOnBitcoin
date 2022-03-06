@@ -42,13 +42,13 @@ window.onload=function(){
         price = data.map((item) => parseInt(item.tradePrice));
         month = data.map((item) => item.firstDayOfPeriod.substr(0,7));})
       .then(function(){
-        fetch('https://www.binance.com/api/v3/klines?endTime=1644730313000&limit=1000&symbol=BTCUSDT&interval=1M')
+        fetch('https://www.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1M')
             .then((response) => response.json())
             .then(function(data){
               let closePrice = data.filter((item,index) => {
                 if(data.length-index <= 12) {
                   binance_price.push(parseInt(item[4]))
-                  return parseInt(item[4])
+                  return parseInt(item[1])
                 }
               });
             })
