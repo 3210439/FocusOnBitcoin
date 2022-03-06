@@ -2,8 +2,10 @@ package org.nell_nell.springboot.service.article;
 
 import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
+import org.nell_nell.springboot.config.auth.dto.SessionUser;
 import org.nell_nell.springboot.domain.article.Article;
 import org.nell_nell.springboot.domain.article.ArticleRepository;
+import org.nell_nell.springboot.domain.user.User;
 import org.nell_nell.springboot.web.dto.PostsSaveRequestDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleListResponseDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleResponseDto;
@@ -48,7 +50,24 @@ public class ArticleService {
     @Transactional(readOnly = true)
     public ArticleResponseDto findById(Long id) {
         Article entity = articleRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다."+id));
+                .orElseThrow(() -> new IllegalArgumentException("해당 글이 없습니다."+id));
+
+        return new ArticleResponseDto(entity);
+    }
+    @Transactional(readOnly = true)
+    public ArticleResponseDto findByIdAndCheckUser(Long id, SessionUser user, User user_s) {
+        Article entity = articleRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 글이 없습니다."+id));
+        String userId = entity.getUserId();
+        if (user != null){
+            if (userId != user.getName())
+                throw new IllegalArgumentException("해당 글의 수정 권한이 없습니다.."+id);
+        }
+        else if (user_s != null){
+            if (userId != user_s.getName())
+                throw new IllegalArgumentException("해당 글의 수정 권한이 없습니다.."+id);
+        }
+
         return new ArticleResponseDto(entity);
     }
 

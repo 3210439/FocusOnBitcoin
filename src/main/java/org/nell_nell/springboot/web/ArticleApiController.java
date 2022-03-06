@@ -42,7 +42,7 @@ public class ArticleApiController {
     }
 
     @GetMapping("/api/v1/article/{id}")
-    public ArticleResponseDto findById(@PathVariable Long id) {
-        return articleService.findById(id);
+    public ArticleResponseDto findById(@PathVariable Long id, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s) {
+        return articleService.findByIdAndCheckUser(id, user, user_s);
     }
 }

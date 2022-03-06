@@ -190,7 +190,7 @@ public class IndexController {
 
     @GetMapping("/article/update/{id}")
     public String articleUpdate(@PathVariable Long id, Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s) {
-        ArticleResponseDto dto = articleService.findById(id);
+        ArticleResponseDto dto = articleService.findByIdAndCheckUser(id, user, user_s);
         model.addAttribute("article", dto);
 
         return "article-update";
