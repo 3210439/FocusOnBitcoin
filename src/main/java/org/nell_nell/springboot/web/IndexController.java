@@ -1,6 +1,11 @@
 package org.nell_nell.springboot.web;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jdk.nashorn.internal.parser.JSONParser;
 import lombok.RequiredArgsConstructor;
+import net.minidev.json.JSONObject;
+import org.nell_nell.springboot.common_features.HttpClient;
 import org.nell_nell.springboot.config.auth.LoginUser;
 import org.nell_nell.springboot.config.auth.dto.SessionUser;
 import org.nell_nell.springboot.domain.user.User;
@@ -10,18 +15,27 @@ import org.nell_nell.springboot.service.user.UserService;
 import org.nell_nell.springboot.web.dto.PostsResponseDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleListResponseDto;
 import org.nell_nell.springboot.web.dto.article_dto.ArticleResponseDto;
+import org.nell_nell.springboot.web.dto.coinListDto;
 import org.nell_nell.springboot.web.dto.user_dto.UserListResponseDto;
+
+import org.springframework.boot.json.JsonParser;
+import org.springframework.boot.json.JsonParserFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestTemplate;
 
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.nell_nell.springboot.common_features.ComFunc.*;
 
@@ -48,6 +62,7 @@ public class IndexController {
         checkUser(model, user, user_s);
         List<ArticleListResponseDto> lst = articleService.findTop4AllByOrderByViewCountDesc();
         model.addAttribute("article", lst);
+        String response;
         articleService.showAnnouncement(model);
 
         return "main";
