@@ -97,10 +97,10 @@
                 <div class="col" style="display:flex">
                     <div class="card shadow mb-4" style="flex:1">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-info">(준비중)공포도 그래프</h6>
+                            <h6 class="m-0 font-weight-bold text-info">공포도 게이지</h6>
                         </div>
                         <div class="card-body">
-
+                            <div id="gauge" style="width:400px; height:320px; margin-left:auto; margin-right:auto;"></div>
                         </div>
                     </div>
                 </div>
@@ -144,6 +144,26 @@
     <!-- End of Footer -->
 
 </div>
+<script src="js/gauge/justgage.js"></script>
+<script src="js/gauge/raphael-2.1.4.min.js"></script>
+<script>
+    let url = "https://api.alternative.me/fng/?limit=1";
+    fetch(url)
+    .then(response => response.json())
+    .then(function(res){
+        console.log(res)
+        console.log(res.data[0].value)
+        console.log(res.data[0].value_classification)
+        var g = new JustGage({
+            id: "gauge",
+            value: parseInt(res.data[0].value),
+            min: 0,
+            max: 100,
+            title: res.data[0].value_classification
+        });
+    });
+</script>
+
 <script src="/vendor/chart.js/Chart.min.js"></script>
 <script src="js/demo/chart-pie-demo.js">
 {{>layout/footer}}
