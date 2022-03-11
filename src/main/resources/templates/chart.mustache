@@ -97,10 +97,10 @@
                 <div class="col" style="display:flex">
                     <div class="card shadow mb-4" style="flex:1">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-info">(준비중)공포도 그래프</h6>
+                            <h6 class="m-0 font-weight-bold text-info">공포도 게이지</h6>
                         </div>
                         <div class="card-body">
-
+                            <div id="gauge" style="width:400px; height:320px; margin-left:auto; margin-right:auto;"></div>
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                 <div class="col" style="display:flex">
                     <div class="card shadow mb-4" style="flex:1">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-info">준비중</h6>
+                            <h6 class="m-0 font-weight-bold text-info">금 시세(준비중)</h6>
                         </div>
                         <div class="card-body">
 
@@ -119,10 +119,22 @@
                 <div class="col" style="display:flex">
                     <div class="card shadow mb-4" style="flex:1">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-info">준비중</h6>
+                            <h6 class="m-0 font-weight-bold text-info">보조지표 설명</h6>
                         </div>
                         <div class="card-body">
-
+                            <h5 style="font-weight: bold">비트코인 도미넌스란?</h5>
+                            <div>모든 코인 가격에서 비트코인이 차지하는 비율을 나타냅니다.
+                            비트코인 도미넌스는 주로 알트코인 시즌 아니면 메이저 코인 시즌인지
+                            구별할 때 주로 사용됩니다.</div>
+                            <h5 style="font-weight: bold">공포도 게이지란 ?</h5>
+                            <div>공포도 게이지란 매수자들의 매수 심리를 나타내는 지표입니다.
+                                높으면 높을수록 많은 사람이 코인 가격이 오를 거라 믿고 있고 반대로
+                                낮을수록 심리적으로 코인 가격이 내려갈 것으로 믿고 있음을 나타냅니다.
+                                이점을 이용하여 공포도가 높을 때 매수하는 전략은 좋은 전략입니다.</div>
+                            <h5 style="font-weight: bold">금 시세란?</h5>
+                            <div>비트코인과 금의 가격은 역사적으로 서로 관련된 움직임을 보여왔습니다.
+                                금 가격이 오르게 되면 비트코인이 약세를 나타내게 되고 반대로 금 가격이 내려가면
+                                비트코인이 강세를 보이게 됩니다.</div>
                         </div>
                     </div>
                 </div>
@@ -144,6 +156,26 @@
     <!-- End of Footer -->
 
 </div>
+<script src="js/gauge/justgage.js"></script>
+<script src="js/gauge/raphael-2.1.4.min.js"></script>
+<script>
+    let url = "https://api.alternative.me/fng/?limit=1";
+    fetch(url)
+    .then(response => response.json())
+    .then(function(res){
+        console.log(res)
+        console.log(res.data[0].value)
+        console.log(res.data[0].value_classification)
+        var g = new JustGage({
+            id: "gauge",
+            value: parseInt(res.data[0].value),
+            min: 0,
+            max: 100,
+            title: res.data[0].value_classification
+        });
+    });
+</script>
+
 <script src="/vendor/chart.js/Chart.min.js"></script>
 <script src="js/demo/chart-pie-demo.js">
 {{>layout/footer}}
