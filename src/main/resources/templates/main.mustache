@@ -137,7 +137,7 @@
                         <!-- Project Card Example -->
                         <div class="card shadow mb-4" style="flex:1">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-info">코인 뉴스(준비중)</h6>
+                                <h6 class="m-0 font-weight-bold text-info">주요 코인</h6>
                             </div>
                             <div class="card-body">
                                 <table class="table">
@@ -240,39 +240,73 @@
     <!-- End of Content Wrapper -->
 
 <script>
-    // async function loadIntoTable(url, table) {
-    //     const tableBody = table.querySelector("tbody")
-    //     const response = await fetch(url);
-    //     const data = await response.json();
+    async function loadIntoTable(url, table) {
+        const tableBody = table.querySelector("tbody")
+        const response = await fetch(url);
+        const json = await response.json();
+        const data = json.data
+
+        let arrKey = {name: "name", price: "price", percentage_change_24h: 2014};
+
+        // Clear the table
+        tableBody.innerHTML = "";
+
+        // Populate the rows
+        for (const row in data){
+            const rowElement = document.createElement("tr");
+            const object1 = data[row];
+            for(const [key, value] of Object.entries(object1)) {
+
+                if(key in arrKey) {
+                    const cellElement = document.createElement("td");
+                    cellElement.textContent = value;
+                    rowElement.appendChild(cellElement);
+                }
+                else if (key == 'quotes') {
+                    for(const [key_, value_] of Object.entries(value)) {
+                        for(const [key_2, value_2] of Object.entries(value_)) {
+                            if(key_2 in arrKey)
+                            {
+                                const cellElement = document.createElement("td");
+                                if(key_2 =="price") {
+                                    let price = value_2;
+                                    if(price < 1)
+                                        price = price.toFixed(2)
+                                    cellElement.textContent = price + '$';
+                                    cellElement.style.fontWeight = "bold";
+                                }
+                                else if(key_2 =="percentage_change_24h") {
+                                    let rate = value_2;
+                                    cellElement.textContent = rate.toFixed(2);
+                                    if(rate < 0)
+                                        cellElement.style.color = "blue";
+                                    else if(rate > 0)
+                                        cellElement.style.color = "red";
+                                }
+                                rowElement.appendChild(cellElement);
+                            }
+                        }
+                    }
+
+                    //let rate = usd_under.percentage_change_24h;
+                }
+            }
+
+            tableBody.appendChild(rowElement);
+        }
+    }
+
+    loadIntoTable("https://api.alternative.me/v2/ticker/?limit=10", document.querySelector("table"));
+
+    // fetch('https://api.alternative.me/v2/ticker/?limit=10')
+    //         .then(function(response) {
+    //             return response.json()
+    //         }).then(function(json) {
+    //     console.log('parsed json', json)
     //
-    //     let arrKey = new Array("name", "price_usd", "percent_change_24h");
-    //
-    //     // Clear the table
-    //     tableBody.innerHTML = "";
-    //
-    //     // Populate the rows
-    //     for (const row of data){
-    //         const rowElement = document.createElement("tr");
-    //
-    //         for(var key in row) {
-    //             const cellElement = document.createElement("td");
-    //             if(arrKey.includes(key))
-    //             {
-    //                 cellElement.textContent = row[key];
-    //                 rowElement.appendChild(cellElement);
-    //             }
-    //         }
-    //
-    //         tableBody.appendChild(rowElement);
-    //     }
-    // }
-    //
-    // //loadIntoTable("https://api.alternative.me/v1/ticker/?limit=1", document.querySelector("table"));
-    // fetch("https://api.alternative.me/v1/ticker/?limit=10")
-    //         .then(response=>response.json())
-    //         .then((data)=>{
-    //             console.log(data)
-    //         })
+    // }).catch(function(ex) {
+    //     console.log('parsing failed', ex)
+    // })
 </script>
 
 <!-- Page level plugins -->
