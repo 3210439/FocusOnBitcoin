@@ -73,6 +73,11 @@ public class IndexController {
         return "homeLogin";
     }
 
+    //@GetMapping("/error")
+    //public String error(){
+    //    return "error";
+    //}
+
     @GetMapping(value={"/altBoard","/altBoard/{search}"})
     public String altBoard(Model model, @LoginUser SessionUser user, @AuthenticationPrincipal User user_s,
                            @PageableDefault(sort="id", direction=Sort.Direction.ASC) Pageable pageable,

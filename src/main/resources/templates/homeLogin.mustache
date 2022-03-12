@@ -69,9 +69,6 @@
                                 </form>
                                 <hr>
                                 <div class="text-center">
-                                    <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                </div>
-                                <div class="text-center">
                                     <a class="small" href="/register">Create an Account!</a>
                                 </div>
                             </div>
@@ -85,7 +82,16 @@
     </div>
 
 </div>
-
+{{#SignupSuccess}}
+<script>
+    alert("회원가입을 성공했습니다.");
+</script>
+{{/SignupSuccess}}
+{{#SignupFail}}
+<script>
+    alert("회원가입을 실패했습니다.");
+</script>
+{{/SignupFail}}
 <!-- Bootstrap core JavaScript-->
 <script src="/vendor/jquery/jquery.min.js"></script>
 <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
