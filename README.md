@@ -57,7 +57,7 @@
    - Bootstrap, jquery, mustache, html, css, javascript
 
 ### DEVOPS
-  - AWS-EC2, AWS-RDS, AWS-S3, TRAVIS CI
+  - AWS-EC2, AWS-RDS, TRAVIS CI
   
 ### 버전관리 
   - git, gitKraken
