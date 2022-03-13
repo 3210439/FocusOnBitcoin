@@ -61,3 +61,8 @@
   
 ### 버전관리 
   - git, gitKraken
+&nbsp;&nbsp;
+
+![Untitled Diagram drawio](https://user-images.githubusercontent.com/47379176/158065742-23fb263d-97d6-43b2-bf76-c680580fb7c3.png)
+
+
