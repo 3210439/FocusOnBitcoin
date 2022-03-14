@@ -64,5 +64,9 @@
 &nbsp;&nbsp;
 
 ![Untitled Diagram drawio](https://user-images.githubusercontent.com/47379176/158065742-23fb263d-97d6-43b2-bf76-c680580fb7c3.png)
+&nbsp;&nbsp;
+### DB 관계도 
+![image](https://user-images.githubusercontent.com/47379176/158175552-c60fe605-5af2-4ef9-b696-6952786b4c7a.png)
+
 
 
