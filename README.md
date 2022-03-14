@@ -88,7 +88,7 @@
 [https://api.alternative.me/v2/ticker/?limit=10](https://api.alternative.me/v2/ticker/?limit=10)
 
 &nbsp;&nbsp;
-**기술 명세서**
+## 📔**기술 명세서**
 https://grape-ring-3f9.notion.site/6471af90e60a450a8a0465decbba0679
 
 
