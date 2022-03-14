@@ -68,5 +68,24 @@
 ### DB 관계도 
 ![image](https://user-images.githubusercontent.com/47379176/158175552-c60fe605-5af2-4ef9-b696-6952786b4c7a.png)
 
+&nbsp;&nbsp;
+## 🍁**사용된 외부 API**
+
+**`공포도 게이지 정보`** 
+
+[https://api.alternative.me/fng/?limit=1](https://api.alternative.me/fng/?limit=1)
+
+`**업비트 비트코인 달 기준 가격 정보**`
+
+[https://crix-api-cdn.upbit.com/v1/crix/candles/months?code=CRIX.UPBIT.USDT-BTC&count=12&ciqrandom=1644651039982](https://crix-api-cdn.upbit.com/v1/crix/candles/months?code=CRIX.UPBIT.USDT-BTC&count=12&ciqrandom=1644651039982%EF%BB%BF)
+
+`**바이낸스 비트코인 달 기준 가격 정보**`
+
+[https://www.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1M](https://www.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1M)
+
+`**거래량 높은 코인중 10개 가격 변동량 정보**`
+
+[https://api.alternative.me/v2/ticker/?limit=10](https://api.alternative.me/v2/ticker/?limit=10)
+
 
 
